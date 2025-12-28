@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SURAKSHA AI - Flood Risk Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌧️ SURAKSHA AI</h1>
+            <p>Real-Time Flood Risk Prediction & Alert System</p>
+        </header>
+
+        <div class="controls">
+            <button id="playBtn" class="btn btn-primary">▶️ Play Simulation</button>
+            <button id="pauseBtn" class="btn btn-secondary">⏸️ Pause</button>
+            <button id="voiceToggle" class="btn btn-success">🔊 Enable Voice Agent</button>
+            <select id="languageSelect" class="select">
+                <option value="en-IN">English</option>
+                <option value="hi-IN">हिंदी</option>
+            </select>
+        </div>
+
+        <div class="status-bar">
+            <div class="status-item">
+                <span class="label">Current Time:</span>
+                <span id="currentTime" class="value">--</span>
+            </div>
+            <div class="status-item">
+                <span class="label">High Risk Cities:</span>
+                <span id="highRiskCount" class="value">0</span>
+            </div>
+            <div class="status-item">
+                <span class="label">Voice Agent:</span>
+                <span id="voiceStatus" class="value">Disabled</span>
+            </div>
+        </div>
+
+        <div id="mapContainer">
+            <!-- Plotly map will be embedded here -->
+            <iframe id="mapFrame" src="flood_map.html" frameborder="0"></iframe>
+        </div>
+
+        <div class="alert-panel">
+            <h3>🚨 Active Alerts</h3>
+            <div id="alertList">
+                <div class="alert-placeholder">
+                    Click "Play Simulation" to start monitoring...
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <h3>ℹ️ System Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">ML Model:</span>
+                    <span class="info-value">Random Forest + LSTM</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Cities Monitored:</span>
+                    <span class="info-value" id="cityCount">20</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Prediction Accuracy:</span>
+                    <span class="info-value">~85%</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Update Frequency:</span>
+                    <span class="info-value">Real-time</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="sirenAudio" loop>
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIGGe77OeeSwwPUKfj8LZjHAU5kdfy0HotBSJ1xe/glEILElyx6OyrWBUIQ5zd8sFuJAUuhM/z3I4+CRZluevrpVINC0+m4u+1YRsFO5PY88p3KwUgcsPu45hEDBBbr+ftrVoWCECY3PLEcSYGLIHO8tiJNggZZ7vs551LDA9Qp+PwtmMcBTmR1/LQei0FInXF7+CUQgsSXLHo7KtYFQhDnN3ywW4kBS6Ez/PcjjwJFmW56+ulUg0LT6bi77VhGwU7k9jzyncrBSByw+7jmEQMEFuv5+2tWhYIQJjc8sRxJgYsgc7y2Ik2CBlnu+znnUsMD1Cn4/C2YxwFOZHX8tB6LQUidcXv4JRCC" type="audio/wav">
+    </audio>
+    <script src="voice_agent.js"></script>
+</body>
+</html>
