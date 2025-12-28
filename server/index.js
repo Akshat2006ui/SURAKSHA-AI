@@ -8,8 +8,31 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'https://suraksha-ai-next-gen-flood-moniteri.vercel.app',
+    'http://localhost:3000'
+  ],
+  credentials: true
+}));
 app.use(express.json());
+
+// Root Route - Health Check
+app.get('/', (req, res) => {
+  res.json({
+    status: '✅ SURAKSHA AI Backend is running',
+    message: 'Use /api endpoints to access data',
+    version: '1.0.0',
+    endpoints: {
+      modelStats: '/api/model-stats',
+      alerts: '/api/alerts',
+      cities: '/api/cities',
+      simulation: '/api/simulation',
+      generateSimulation: '/api/generate-simulation (POST)'
+    },
+    timestamp: new Date().toISOString()
+  });
+});
 
 // API Routes
 
@@ -115,15 +138,44 @@ app.get('/api/model-stats', (req, res) => {
   res.json({ success: true, data: stats });
 });
 
-// Serve static files in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
-  
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'healthy',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
   });
-}
+});
+
+// 404 handler for undefined routes
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: 'Route not found',
+    availableEndpoints: [
+      'GET /',
+      'GET /api/health',
+      'GET /api/model-stats',
+      'GET /api/alerts',
+      'GET /api/cities',
+      'GET /api/simulation',
+      'POST /api/generate-simulation'
+    ]
+  });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error('Error:', err);
+  res.status(500).json({
+    success: false,
+    message: 'Internal server error',
+    error: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong'
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`🚀 SURAKSHA AI Server running on port ${PORT}`);
+  console.log(`📍 Backend API only - Frontend served separately on Vercel`);
 });
