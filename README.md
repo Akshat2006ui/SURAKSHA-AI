@@ -1,5 +1,5 @@
-🌧️ SURAKSHA AI
-AI-Powered Flood Risk Prediction & Disaster Management System
+## 🌧️ SURAKSHA AI
+## AI-Powered Flood Risk Prediction & Disaster Management System
 
 SURAKSHA AI is a production-ready, full-stack AI application designed to predict flood risks, visualize simulations, and assist in early disaster preparedness.
 It combines Machine Learning, Deep Learning, GIS visualizations, a modern React UI, and a Node.js API, making it ideal for hackathons, research, and real-world deployment.
